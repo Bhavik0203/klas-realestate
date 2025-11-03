@@ -1,65 +1,1132 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion";
+import { useRef } from "react";
+import Service from "./components/service";
 
 export default function Home() {
+  const [openFaq, setOpenFaq] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const { scrollYProgress } = useScroll();
+  
+  // Contact form state
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    contact: '',
+    message: ''
+  });
+
+  // Loading effect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    
+    // Special handling for contact field - only allow 10 digits
+    if (name === 'contact') {
+      const digitsOnly = value.replace(/\D/g, '').slice(0, 10);
+      setFormData(prev => ({
+        ...prev,
+        [name]: digitsOnly
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+  };
+
+  const faqs = [
+    {
+      question: "What types of properties does KLAS Realty develop?",
+      answer: "KLAS Realty specializes in both residential and commercial projects. We develop premium residential complexes and commercial spaces across Mumbai, Thane, Chennai, and Gujarat, with over 1 million sq. ft. of planned built-up area currently in development."
+    },
+    {
+      question: "Where are KLAS Realty properties located?",
+      answer: "We own premium lands across Mumbai and Thane, and lease prime commercial premises in Mumbai, Chennai, and Gujarat. Our expanding national footprint includes strategic locations in key metropolitan areas across India."
+    },
+    {
+      question: "Does KLAS Realty work with joint venture partners?",
+      answer: "Yes, we actively engage in joint venture development partnerships. Our premium lands in Mumbai and Thane are currently in advanced stages of joint venture development, creating landmark residential and commercial projects."
+    },
+    {
+      question: "What makes KLAS Realty different?",
+      answer: "Established in 2000, KLAS Realty combines decades of experience with a robust portfolio of high-value properties. We focus on transforming land into landmark projects while creating steady, long-term value across every asset class through strategic development and leasing."
+    },
+    {
+      question: "Are KLAS Realty properties available for commercial leasing?",
+      answer: "Yes, we lease prime commercial premises in Mumbai, Chennai, and Gujarat to leading corporates. Our commercial properties offer strategic locations that create steady, long-term value for businesses."
+    }
+  ];
+
+  // Loading screen
+  if (isLoading) {
+    return (
+      <motion.div 
+        className="fixed inset-0 bg-gradient-to-br from-[#12394C] to-[#12394C]/70 flex items-center justify-center z-50"
+        initial={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.div 
+          className="text-center"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.div
+            className="w-16 h-16 border-4 border-white border-t-transparent rounded-full mx-auto mb-4"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          />
+          <motion.h2 
+            className="text-2xl font-bold text-white mb-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            KLAS Realty
+          </motion.h2>
+          <motion.p 
+            className="text-white/80"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            Transforming land into landmarks...
+          </motion.p>
+        </motion.div>
+      </motion.div>
+    );
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <motion.div 
+      className="min-h-screen bg-white"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Header */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-white/95 backdrop-blur-sm shadow-lg' 
+          : 'bg-transparent'
+      }`}>
+        <nav className={`container mx-auto px-6 transition-all duration-300 ${
+          isScrolled ? 'py-3' : 'py-6'
+        }`}>
+          <div className="flex items-center justify-between">
+            <div className={`text-2xl font-bold transition-colors duration-300 ${
+              isScrolled ? 'text-gray-800' : 'text-white'
+            }`}>
+              KLAS Realty
+            </div>
+            
+            {/* Desktop Menu */}
+            <div className="hidden md:flex space-x-8">
+              <Link href="#about" className={`transition-colors duration-300 ${
+                isScrolled 
+                  ? 'text-gray-700 hover:text-[#12394C]' 
+                  : 'text-white/90 hover:text-white'
+              }`}>About</Link>
+              <Link href="#portfolio" className={`transition-colors duration-300 ${
+                isScrolled 
+                  ? 'text-gray-700 hover:text-[#12394C]' 
+                  : 'text-white/90 hover:text-white'
+              }`}>Portfolio</Link>
+              <Link href="#services" className={`transition-colors duration-300 ${
+                isScrolled 
+                  ? 'text-gray-700 hover:text-[#12394C]' 
+                  : 'text-white/90 hover:text-white'
+              }`}>Services</Link>
+              <Link href="#faq" className={`transition-colors duration-300 ${
+                isScrolled 
+                  ? 'text-gray-700 hover:text-[#12394C]' 
+                  : 'text-white/90 hover:text-white'
+              }`}>FAQ</Link>
+              <Link href="#contact" className={`px-6 py-1 rounded-lg font-medium transition-all duration-300 ${
+                isScrolled 
+                  ? 'bg-[#12394C] text-white hover:bg-[#12394C]/80' 
+                  : 'bg-white/20 text-white border border-white/30 hover:bg-white hover:text-gray-800'
+              }`}>Contact</Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className={`md:hidden p-2 rounded-lg transition-colors duration-300 ${
+                isScrolled 
+                  ? 'text-gray-800 hover:bg-gray-100' 
+                  : 'text-white hover:bg-white/20'
+              }`}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          <div className={`md:hidden transition-all duration-300 overflow-hidden ${
+            isMobileMenuOpen ? 'max-h-64 opacity-100 mt-4' : 'max-h-0 opacity-0'
+          }`}>
+            <div className={`py-4 space-y-4 ${
+              isScrolled 
+                ? 'bg-white/95 backdrop-blur-sm rounded-lg shadow-lg' 
+                : 'bg-black/20 backdrop-blur-sm rounded-lg'
+            }`}>
+              <Link 
+                href="#about" 
+                className={`block px-4 py-2 transition-colors duration-300 ${
+                  isScrolled 
+                    ? 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' 
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                About
+              </Link>
+              <Link 
+                href="#portfolio" 
+                className={`block px-4 py-2 transition-colors duration-300 ${
+                  isScrolled 
+                    ? 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' 
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Portfolio
+              </Link>
+              <Link 
+                href="#services" 
+                className={`block px-4 py-2 transition-colors duration-300 ${
+                  isScrolled 
+                    ? 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' 
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Services
+              </Link>
+              <Link 
+                href="#faq" 
+                className={`block px-4 py-2 transition-colors duration-300 ${
+                  isScrolled 
+                    ? 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' 
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                FAQ
+              </Link>
+              <Link 
+                href="#contact" 
+                className={`block mx-4 px-4 py-2 rounded-lg text-center font-medium transition-all duration-300 ${
+                  isScrolled 
+                    ? 'bg-[#12394C] text-white hover:bg-[#12394C]/80' 
+                    : 'bg-white/20 text-white border border-white/30 hover:bg-white hover:text-gray-800'
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Contact
+              </Link>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      {/* Scroll Progress Indicator */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#12394C]/80 to-[#12394C]/60 z-50 origin-left"
+        style={{ scaleX: scrollYProgress }}
+      />
+
+      {/* Section 1: Banner */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        <motion.div 
+          className="absolute inset-0"
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+        >
+          <Image
+            src="/images/3.jpg"
+            alt="KLAS Realty Background"
+            fill
+            className="object-cover"
+            priority
+          />
+          <motion.div 
+            className="absolute inset-0 bg-black/60"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.5, delay: 0.5 }}
+          />
+        </motion.div>
+        <motion.div 
+          className="relative z-10 text-center text-white max-w-4xl mx-auto px-6"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.8 }}
+        >
+          <motion.h1 
+            className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+          >
+            Transforming Land into Landmark Projects
+          </motion.h1>
+          <motion.p 
+            className="text-xl md:text-2xl mb-8 text-gray-200 leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.5 }}
+          >
+            Established in 2000, KLAS Realty holds a robust portfolio of high-value properties across India, with an expanding national footprint.
+          </motion.p>
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.8 }}
+          >
+            <motion.button 
+              className="bg-[#12394C] cursor-pointer text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-teal-700 transition-colors"
+              whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(13, 148, 136, 0.3)" }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              Explore Portfolio
+            </motion.button>
+            <motion.button 
+              className="border-2 border-white cursor-pointer text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-white transition-colors"
+              whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              Contact Us
+            </motion.button>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Section 2: About */}
+      <motion.section 
+        id="about" 
+        className="py-20 bg-gradient-to-br from-slate-50 to-teal-50"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <div className="container mx-auto max-w-6xl px-6">
+          <div className="grid lg:grid-cols-[42%_58%] gap-12 items-stretch">
+            {/* Left Content - Image */}
+            <motion.div 
+              className="relative h-full"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <motion.div 
+                className="relative rounded-2xl overflow-hidden shadow-xl h-full"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="h-full relative bg-gradient-to-br from-slate-800 to-slate-900">
+                  <Image
+                    src="/images/realestart.png"
+                    alt="KLAS Realty Premium Development"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Right Content */}
+            <motion.div 
+              className="space-y-8"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              {/* Header with Icon */}
+              {/* <motion.div 
+                className="flex items-center gap-3 mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-3 h-3 bg-[#12394C]"></div>
+                <span className="text-xs font-semibold tracking-wider uppercase text-[#12394C]">
+                  ABOUT OUR COMPANY
+                </span>
+              </motion.div> */}
+
+              {/* Main Title */}
+              <motion.h2 
+                className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-6"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                viewport={{ once: true }}
+              >
+                KLAS Realty
+              </motion.h2>
+
+              {/* Team Avatars */}
+              <motion.div 
+                className="flex items-center mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex -space-x-3">
+                  {/* First team member */}
+                  <div className="w-14 h-14 rounded-full border-2 border-white ring-2 ring-gray-100 overflow-hidden">
+                    <img 
+                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" 
+                      alt="Team member 1"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  {/* Second team member */}
+                  <div className="w-14 h-14 rounded-full border-2 border-white ring-2 ring-gray-100 overflow-hidden">
+                    <img 
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" 
+                      alt="Team member 2"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  {/* Third team member */}
+                  <div className="w-14 h-14 rounded-full border-2 border-white ring-2 ring-gray-100 overflow-hidden">
+                    <img 
+                      src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" 
+                      alt="Team member 3"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  {/* Add more circle */}
+                  <Link href="#contact" className="w-14 h-14 rounded-full bg-[#12394C] flex items-center justify-center border-2 border-white ring-2 ring-gray-100 hover:bg-[#12394C]/90 transition-colors cursor-pointer">
+                    <span className="text-white text-xl font-bold">+</span>
+                  </Link>
+                </div>
+              </motion.div>
+
+              {/* Team Description */}
+            
+
+              {/* Original Content Paragraphs */}
+              <motion.div 
+                className="prose prose-lg text-gray-600 leading-relaxed space-y-6 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <motion.p 
+                  className="text-xl text-gray-700 font-medium"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.9 }}
+                  viewport={{ once: true }}
+                >
+                  Established in 2000, KLAS Realty holds a robust portfolio of high-value properties across India, with an expanding national footprint.
+                </motion.p>
+                
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.0 }}
+                  viewport={{ once: true }}
+                >
+                  KLAS owns premium lands across Mumbai and Thane, which are currently in advanced stages of joint venture development of Residential & Commercial Projects totalling 1+ million sq. ft. of planned built-up area.
+                </motion.p>
+                
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.1 }}
+                  viewport={{ once: true }}
+                >
+                  Beyond development, we lease prime commercial premises in Mumbai, Chennai, and Gujarat to leading corporates—creating steady, long-term value across every asset class.
+                </motion.p>
+              </motion.div>
+
+              {/* Separator */}
+              <motion.div 
+                className="relative mb-8"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 1.2 }}
+                viewport={{ once: true }}
+              >
+                <div className="h-px bg-gray-200"></div>
+                <div className="absolute left-0 top-0 w-16 h-1 bg-[#12394C]"></div>
+              </motion.div>
+
+              {/* Metrics */}
+              <motion.div 
+                className="grid grid-cols-2 gap-8"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.3 }}
+                viewport={{ once: true }}
+              >
+                {/* Left Metric */}
+                <div>
+                  <div className="text-5xl md:text-6xl font-bold text-[#12394C] mb-2">
+                    1M+
+                  </div>
+                  <div className="text-sm text-gray-600 leading-relaxed">
+                    Sq. Ft. Development
+                  </div>
+                </div>
+
+                {/* Right Metric */}
+                <div>
+                  <div className="text-5xl md:text-6xl font-bold text-[#12394C] mb-2">
+                    2000
+                  </div>
+                  <div className="text-sm text-gray-600 leading-relaxed">
+                    Established
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </motion.section>
+
+      {/* Section 3: Portfolio */}
+      <motion.section 
+        id="portfolio" 
+        className="py-20 bg-gray-50"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <div className="container max-w-6xl mx-auto px-6">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-gray-800 mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              Our Portfolio
+            </motion.h2>
+            <motion.p 
+              className="text-xl text-gray-600 max-w-3xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              viewport={{ once: true }}
+            >
+              Premium lands and commercial properties creating enduring value across India.
+            </motion.p>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+            {/* Portfolio Card 1 - Mumbai & Thane Development */}
+            <motion.div 
+              className="group relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-500 cursor-pointer"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
+              <div className="relative h-80">
+                <Image
+                  src="/images/3.jpg"
+                  alt="Mumbai & Thane Development"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                
+                <div className="absolute bottom-6 left-6 right-6 transition-opacity duration-500 group-hover:opacity-0">
+                  <h3 className="text-2xl font-bold text-white mb-2">Mumbai & Thane</h3>
+                </div>
+                
+                <div className="absolute inset-0 bg-black/80 flex flex-col justify-center items-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                  <h3 className="text-2xl font-bold text-white mb-4">Mumbai & Thane</h3>
+                  <p className="text-white/90 mb-6 text-center text-sm leading-relaxed">Premium lands in advanced stages of joint venture development. Residential & Commercial projects totaling 1+ million sq. ft. of planned built-up area.</p>
+                  <div className="text-sm text-white/80 space-y-2 text-center">
+                    <p className="flex items-center justify-center">
+                      <span className="w-2 h-2 bg-teal-400 rounded-full mr-2"></span>
+                      Residential Projects
+                    </p>
+                    <p className="flex items-center justify-center">
+                      <span className="w-2 h-2 bg-teal-400 rounded-full mr-2"></span>
+                      Commercial Developments
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Portfolio Card 2 - Commercial Leasing */}
+            <motion.div 
+              className="group relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-500 cursor-pointer"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
+              <div className="relative h-80">
+                <Image
+                  src="/images/3.jpg"
+                  alt="Commercial Leasing"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                
+                <div className="absolute bottom-6 left-6 right-6 transition-opacity duration-500 group-hover:opacity-0">
+                  <h3 className="text-2xl font-bold text-white mb-2">Commercial Leasing</h3>
+                </div>
+                
+                <div className="absolute inset-0 bg-black/80 flex flex-col justify-center items-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                  <h3 className="text-2xl font-bold text-white mb-4">Commercial Leasing</h3>
+                  <p className="text-white/90 mb-6 text-center text-sm leading-relaxed">Prime commercial premises in Mumbai, Chennai, and Gujarat leased to leading corporates. Strategic locations creating steady, long-term value.</p>
+                  <div className="text-sm text-white/80 space-y-2 text-center">
+                    <p className="flex items-center justify-center">
+                      <span className="w-2 h-2 bg-teal-400 rounded-full mr-2"></span>
+                      Mumbai Premises
+                    </p>
+                    <p className="flex items-center justify-center">
+                      <span className="w-2 h-2 bg-teal-400 rounded-full mr-2"></span>
+                      Chennai & Gujarat
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </main>
-    </div>
+      </motion.section>
+
+      {/* Section 4: Call to Action */}
+      <motion.section 
+        className="relative py-20 overflow-hidden"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <motion.div 
+          className="absolute inset-0"
+          initial={{ scale: 1.1 }}
+          whileInView={{ scale: 1 }}
+          transition={{ duration: 1.5 }}
+          viewport={{ once: true }}
+        >
+          <Image
+            src="/images/3.jpg"
+            alt="Call to Action Background"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-teal-900/80"></div>
+        </motion.div>
+        <motion.div 
+          className="relative z-10 container mx-auto px-6 text-center text-white"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          viewport={{ once: true }}
+        >
+          <motion.h2 
+            className="text-4xl md:text-5xl font-bold mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            viewport={{ once: true }}
+          >
+            Ready to Transform Your Property Vision?
+          </motion.h2>
+          <motion.p 
+            className="text-xl mb-8 max-w-3xl mx-auto text-teal-100"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            viewport={{ once: true }}
+          >
+            Partner with KLAS Realty to transform land into landmark projects. Experience the pinnacle of real estate development and leasing excellence.
+          </motion.p>
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            viewport={{ once: true }}
+          >
+            <motion.button 
+              className="bg-white text-teal-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors"
+              whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(255, 255, 255, 0.2)" }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Get a Quote
+            </motion.button>
+            <motion.button 
+              className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-white transition-colors"
+              whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Contact Us
+            </motion.button>
+          </motion.div>
+        </motion.div>
+      </motion.section>
+
+      {/* Section 5: Services */}
+      <section id="services">
+        <Service/>
+      </section>
+
+      {/* Section 6: FAQ */}
+      <motion.section 
+        id="faq" 
+        className="py-20 bg-gray-50"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-[1fr_2fr] gap-12 max-w-6xl mx-auto">
+            {/* Left Column */}
+            <motion.div 
+              className="bg-gray-100 p-8 lg:p-12 flex flex-col justify-center"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              {/* OUR SOLUTIONS Label */}
+              <motion.div 
+                className="flex items-center gap-3 mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                viewport={{ once: true }}
+              >
+           
+                <span className="text-sm font-semibold tracking-wider uppercase text-[#12394C]">
+                  OUR SOLUTIONS
+                </span>
+              </motion.div>
+
+              {/* Main Heading */}
+              <motion.h2 
+                className="text-4xl md:text-5xl font-bold text-gray-800 mb-8 leading-tight"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                Find answers to the common questions
+              </motion.h2>
+
+              {/* Phone Contact */}
+              <motion.div 
+                className="flex flex-row items-center gap-3"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-12 h-12 bg-[#12394C] rounded-full flex items-center justify-center shrink-0">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                </div>
+                <a 
+                  href="tel:+18884521505" 
+                  className="text-xl font-semibold text-gray-800 hover:text-[#12394C] transition-colors no-underline"
+                  aria-label="Call us at 1-888-452-1505"
+                >
+                  1-888-452-1505
+                </a>
+              </motion.div>
+            </motion.div>
+
+            {/* Right Column - FAQ Accordion */}
+            <motion.div 
+              className="bg-white rounded-2xl shadow-lg p-6 lg:p-8"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <div className="space-y-0">
+                {faqs.map((faq, index) => (
+                  <motion.div 
+                    key={index}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                  >
+                    <motion.div 
+                      className="overflow-hidden"
+                    >
+                      <motion.button
+                        className="w-full px-6 py-6 text-left flex items-center justify-between transition-colors bg-white text-gray-800 hover:bg-gray-50"
+                        onClick={() => setOpenFaq(openFaq === index ? -1 : index)}
+                        whileHover={{ backgroundColor: "rgba(249, 250, 251, 0.8)" }}
+                        whileTap={{ scale: 0.99 }}
+                      >
+                        <h3 className="text-xl font-bold pr-4 text-gray-800">
+                          {faq.question}
+                        </h3>
+                        <div className="shrink-0">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center bg-white">
+                            <motion.svg
+                              className="w-4 h-4 text-white"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              animate={{ rotate: openFaq === index ? 45 : 0 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              {openFaq === index ? (
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M18 12H6" />
+                              ) : (
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 6v12m6-6H6" />
+                              )}
+                            </motion.svg>
+                          </div>
+                        </div>
+                      </motion.button>
+                      <AnimatePresence>
+                        {openFaq === index && (
+                          <motion.div
+                            className="px-6 pb-6 bg-white"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                          >
+                            <motion.p 
+                              className="text-gray-600 leading-relaxed pt-2"
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              transition={{ duration: 0.2, delay: 0.1 }}
+                            >
+                              {faq.answer}
+                            </motion.p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                    {index < faqs.length - 1 && (
+                      <div className="border-t border-dashed border-gray-300"></div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Section 7: Contact */}
+      <motion.section 
+        id="contact" 
+        className="relative py-20 overflow-hidden"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <motion.div 
+          className="absolute inset-0"
+          initial={{ scale: 1.1 }}
+          whileInView={{ scale: 1 }}
+          transition={{ duration: 1.5 }}
+          viewport={{ once: true }}
+        >
+          <Image
+            src="/images/3.jpg"
+            alt="Contact Background"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-black/50"></div>
+        </motion.div>
+        <div className="relative z-10 container mx-auto px-6">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-white mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              Get In Touch
+            </motion.h2>
+         
+          </motion.div>
+
+          <motion.div 
+            className="max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <motion.div 
+                className="grid md:grid-cols-2 gap-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+                viewport={{ once: true }}
+              >
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.8 }}
+                  viewport={{ once: true }}
+                >
+                  <label htmlFor="name" className="block text-white text-sm font-medium mb-2">
+                    Name
+                  </label>
+                  <motion.input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 bg-transparent border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30 rounded-lg"
+                    placeholder="Your full name"
+                    whileFocus={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.6)" }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.9 }}
+                  viewport={{ once: true }}
+                >
+                  <label htmlFor="email" className="block text-white text-sm font-medium mb-2">
+                    Email
+                  </label>
+                  <motion.input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 bg-transparent border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30 rounded-lg"
+                    placeholder="your@email.com"
+                    whileFocus={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.6)" }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  />
+                </motion.div>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.0 }}
+                viewport={{ once: true }}
+              >
+                <label htmlFor="contact" className="block text-white text-sm font-medium mb-2">
+                  Contact Number
+                </label>
+                <motion.input
+                  type="tel"
+                  id="contact"
+                  name="contact"
+                  value={formData.contact}
+                  onChange={handleInputChange}
+                  required
+                  pattern="[0-9]{10}"
+                  maxLength={10}
+                  className="w-full px-4 py-3 bg-transparent border border-white/40 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30 rounded-lg"
+                  placeholder="Enter 10-digit phone number"
+                  whileFocus={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.6)" }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.1 }}
+                viewport={{ once: true }}
+              >
+                <label htmlFor="message" className="block text-white text-sm font-medium mb-2">
+                  Message
+                </label>
+                <motion.textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={4}
+                  className="w-full px-4 py-3 bg-transparent text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30 border border-white/40 rounded-lg resize-none"
+                  placeholder="Tell us about your property requirements..."
+                  whileFocus={{ scale: 1.02, borderColor: "rgba(255, 255, 255, 0.6)" }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                />
+              </motion.div>
+
+              <motion.div 
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.2 }}
+                viewport={{ once: true }}
+              >
+                <motion.button
+                  type="submit"
+                  className="bg-white text-gray-900 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-white/30"
+                  whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(255, 255, 255, 0.2)" }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  Submit Message
+                </motion.button>
+              </motion.div>
+            </form>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-16">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="col-span-2">
+              <h3 className="text-2xl font-bold mb-4">KLAS Realty </h3>
+              <p className="text-gray-300 mb-6 max-w-md">
+                Transforming land into landmark projects. Established in 2000, we hold a robust portfolio of high-value properties across India, creating enduring value through strategic development and leasing.
+              </p>
+              {/* <div className="flex space-x-4">
+                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#12394C] transition-colors">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                  </svg>
+                </a>
+                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                  </svg>
+                </a>
+                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </a>
+              </div> */}
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-gray-300">
+                <li><a href="#about" className="hover:text-white transition-colors">About Us</a></li>
+                <li><a href="#portfolio" className="hover:text-white transition-colors">Portfolio</a></li>
+                <li><a href="#services" className="hover:text-white transition-colors">Services</a></li>
+                <li><a href="#faq" className="hover:text-white transition-colors">FAQ</a></li>
+                <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
+              <div className="space-y-3 text-gray-300">
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                  <span>+91 (XXX) XXX-XXXX</span>
+                </div>
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  <span>info@klasrealty.com</span>
+                </div>
+                <div className="flex items-start">
+                  <svg className="w-5 h-5 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span>Mumbai, Thane, Chennai, Gujarat<br />India</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+            <p>&copy; 2025 KLAS Realty . All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </motion.div>
   );
 }
