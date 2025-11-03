@@ -831,7 +831,7 @@ export default function Home() {
                           {faq.question}
                         </h3>
                         <div className="shrink-0">
-                          <div className="w-8 h-8 rounded-full flex items-center justify-center bg-white">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center bg-[#12394C]">
                             <motion.svg
                               className="w-4 h-4 text-white"
                               fill="none"
@@ -841,9 +841,9 @@ export default function Home() {
                               transition={{ duration: 0.2 }}
                             >
                               {openFaq === index ? (
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M18 12H6" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 12h12" />
                               ) : (
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 6v12m6-6H6" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 6v12M6 12h12" />
                               )}
                             </motion.svg>
                           </div>
@@ -1116,7 +1116,7 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <span>Mumbai, Thane, Chennai, Gujarat<br />India</span>
+                  <span>Mumbai, India</span>
                 </div>
               </div>
             </div>
