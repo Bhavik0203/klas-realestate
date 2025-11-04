@@ -84,28 +84,28 @@ const Service = () => {
       number: 1,
       title: "Premium Land Development",
       description: "Transforming prime lands across Mumbai and Thane into landmark residential and commercial projects. Our joint venture developments span over 1 million sq. ft. of planned built-up area, creating enduring value and exceptional living spaces.",
-      illustration: "/images/3.jpg",
+      illustration: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&h=300&fit=crop",
       position: "left"
     },
     {
       number: 2,
       title: "Commercial Leasing",
       description: "We lease prime commercial premises in Mumbai, Chennai, and Gujarat to leading corporates, providing strategic locations that drive business success and create steady, long-term value across every asset class.",
-      illustration: "/images/3.jpg",
+      illustration: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=300&h=300&fit=crop",
       position: "right"
     },
     {
       number: 3,
       title: "Residential Projects",
       description: "Creating premium residential spaces that blend modern design with functional living. Our developments focus on creating communities that enhance quality of life and provide exceptional returns for investors.",
-      illustration: "/images/3.jpg",
+      illustration: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=300&h=300&fit=crop",
       position: "left"
     },
     {
       number: 4,
       title: "Strategic Partnerships",
       description: "Leveraging our robust portfolio and expanding national footprint, we build strategic joint ventures that maximize land value and create landmark projects that define skylines and communities.",
-      illustration: "/images/3.jpg",
+      illustration: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=300&h=300&fit=crop",
       position: "right"
     },
    
@@ -228,7 +228,7 @@ const Service = () => {
               viewport={{ once: true }}
             >
               <motion.div 
-                className="w-16 h-16 bg-teal-500 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg"
+                className="w-16 h-16 bg-[#12394C] text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg"
                 whileHover={{ scale: 1.1, boxShadow: "0 10px 25px rgba(20, 184, 166, 0.4)" }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >

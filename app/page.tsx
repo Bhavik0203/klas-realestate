@@ -12,6 +12,7 @@ export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const { scrollYProgress } = useScroll();
   
   // Contact form state
@@ -40,6 +41,18 @@ export default function Home() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Keyboard support for lightbox
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && selectedImage) {
+        setSelectedImage(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -163,6 +176,11 @@ export default function Home() {
                   ? 'text-gray-700 hover:text-[#12394C]' 
                   : 'text-white/90 hover:text-white'
               }`}>Portfolio</Link>
+              <Link href="#gallery" className={`transition-colors duration-300 ${
+                isScrolled 
+                  ? 'text-gray-700 hover:text-[#12394C]' 
+                  : 'text-white/90 hover:text-white'
+              }`}>Gallery</Link>
               <Link href="#services" className={`transition-colors duration-300 ${
                 isScrolled 
                   ? 'text-gray-700 hover:text-[#12394C]' 
@@ -231,6 +249,17 @@ export default function Home() {
                 Portfolio
               </Link>
               <Link 
+                href="#gallery" 
+                className={`block px-4 py-2 transition-colors duration-300 ${
+                  isScrolled 
+                    ? 'text-gray-700 hover:text-teal-600 hover:bg-gray-50' 
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Gallery
+              </Link>
+              <Link 
                 href="#services" 
                 className={`block px-4 py-2 transition-colors duration-300 ${
                   isScrolled 
@@ -283,7 +312,7 @@ export default function Home() {
           transition={{ duration: 2, ease: "easeOut" }}
         >
           <Image
-            src="/images/3.jpg"
+            src="/images/2.jpg"
             alt="KLAS Realty Background"
             fill
             className="object-cover"
@@ -324,22 +353,24 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.8 }}
           >
-            <motion.button 
-              className="bg-[#12394C] cursor-pointer text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-teal-700 transition-colors"
+            <motion.a 
+              href="#portfolio"
+              className="bg-[#12394C] cursor-pointer text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-teal-700 transition-colors inline-block"
               whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(13, 148, 136, 0.3)" }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
               Explore Portfolio
-            </motion.button>
-            <motion.button 
-              className="border-2 border-white cursor-pointer text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-white transition-colors"
+            </motion.a>
+            <motion.a 
+              href="#contact"
+              className="border-2 border-white cursor-pointer text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-white transition-colors inline-block"
               whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
               Contact Us
-            </motion.button>
+            </motion.a>
           </motion.div>
         </motion.div>
       </section>
@@ -540,7 +571,7 @@ export default function Home() {
       {/* Section 3: Portfolio */}
       <motion.section 
         id="portfolio" 
-        className="py-20 bg-gray-50"
+        className="py-20 bg-white"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -574,89 +605,264 @@ export default function Home() {
             </motion.p>
           </motion.div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
-            {/* Portfolio Card 1 - Mumbai & Thane Development */}
+          <div className="space-y-12">
+            {/* Portfolio Item 1 - Mumbai & Thane Development */}
             <motion.div 
-              className="group relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-500 cursor-pointer"
+              className="grid md:grid-cols-2 gap-8 items-center"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true, amount: 0.3 }}
-              whileHover={{ y: -10, scale: 1.02 }}
             >
-              <div className="relative h-80">
-                <Image
-                  src="/images/3.jpg"
-                  alt="Mumbai & Thane Development"
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                
-                <div className="absolute bottom-6 left-6 right-6 transition-opacity duration-500 group-hover:opacity-0">
-                  <h3 className="text-2xl font-bold text-white mb-2">Mumbai & Thane</h3>
+              {/* Content - Left side */}
+              <motion.div 
+                className="space-y-6 md:order-1"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                <div>
+                  <span className="inline-block px-3 py-1 bg-[#12394C]/10 text-[#12394C] text-sm font-semibold rounded-full mb-4">
+                    Development
+                  </span>
+                  <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    Mumbai & Thane
+                  </h3>
+                  <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                    Premium lands in advanced stages of joint venture development. Residential & Commercial projects totaling 1+ million sq. ft. of planned built-up area.
+                  </p>
                 </div>
                 
-                <div className="absolute inset-0 bg-black/80 flex flex-col justify-center items-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                  <h3 className="text-2xl font-bold text-white mb-4">Mumbai & Thane</h3>
-                  <p className="text-white/90 mb-6 text-center text-sm leading-relaxed">Premium lands in advanced stages of joint venture development. Residential & Commercial projects totaling 1+ million sq. ft. of planned built-up area.</p>
-                  <div className="text-sm text-white/80 space-y-2 text-center">
-                    <p className="flex items-center justify-center">
-                      <span className="w-2 h-2 bg-teal-400 rounded-full mr-2"></span>
-                      Residential Projects
-                    </p>
-                    <p className="flex items-center justify-center">
-                      <span className="w-2 h-2 bg-teal-400 rounded-full mr-2"></span>
-                      Commercial Developments
-                    </p>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-gray-700">
+                    <div className="w-2 h-2 bg-[#12394C] rounded-full"></div>
+                    <span className="font-medium">Residential Projects</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-gray-700">
+                    <div className="w-2 h-2 bg-[#12394C] rounded-full"></div>
+                    <span className="font-medium">Commercial Developments</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-gray-700">
+                    <svg className="w-5 h-5 text-[#12394C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span className="text-gray-600">Maharashtra, India</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
+
+              {/* Image - Right side */}
+              <motion.div 
+                className="relative h-96 rounded-lg overflow-hidden shadow-lg md:order-2"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Image
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80"
+                  alt="Mumbai & Thane Development"
+                  fill
+                  className="object-cover"
+                />
+              </motion.div>
             </motion.div>
 
-            {/* Portfolio Card 2 - Commercial Leasing */}
+            {/* Portfolio Item 2 - Commercial Leasing */}
             <motion.div 
-              className="group relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-500 cursor-pointer"
+              className="grid md:grid-cols-2 gap-8 items-center"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true, amount: 0.3 }}
-              whileHover={{ y: -10, scale: 1.02 }}
             >
-              <div className="relative h-80">
+               {/* Image - Left side */}
+               <motion.div 
+                className="relative h-96 rounded-lg overflow-hidden shadow-lg md:order-1"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
                 <Image
-                  src="/images/3.jpg"
+                  src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80"
                   alt="Commercial Leasing"
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                
-                <div className="absolute bottom-6 left-6 right-6 transition-opacity duration-500 group-hover:opacity-0">
-                  <h3 className="text-2xl font-bold text-white mb-2">Commercial Leasing</h3>
+              </motion.div>
+              {/* Content - Right side */}
+              <motion.div 
+                className="space-y-6 md:order-2"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <div>
+                  <span className="inline-block px-3 py-1 bg-teal-500/10 text-teal-600 text-sm font-semibold rounded-full mb-4">
+                    Leasing
+                  </span>
+                  <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    Commercial Leasing
+                  </h3>
+                  <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                    Prime commercial premises in Mumbai, Chennai, and Gujarat leased to leading corporates. Strategic locations creating steady, long-term value.
+                  </p>
                 </div>
                 
-                <div className="absolute inset-0 bg-black/80 flex flex-col justify-center items-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                  <h3 className="text-2xl font-bold text-white mb-4">Commercial Leasing</h3>
-                  <p className="text-white/90 mb-6 text-center text-sm leading-relaxed">Prime commercial premises in Mumbai, Chennai, and Gujarat leased to leading corporates. Strategic locations creating steady, long-term value.</p>
-                  <div className="text-sm text-white/80 space-y-2 text-center">
-                    <p className="flex items-center justify-center">
-                      <span className="w-2 h-2 bg-teal-400 rounded-full mr-2"></span>
-                      Mumbai Premises
-                    </p>
-                    <p className="flex items-center justify-center">
-                      <span className="w-2 h-2 bg-teal-400 rounded-full mr-2"></span>
-                      Chennai & Gujarat
-                    </p>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-gray-700">
+                    <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                    <span className="font-medium">Mumbai Premises</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-gray-700">
+                    <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                    <span className="font-medium">Chennai & Gujarat</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-gray-700">
+                    <svg className="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span className="text-gray-600">Multiple Locations</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
+
+             
             </motion.div>
           </div>
         </div>
       </motion.section>
 
-      {/* Section 4: Call to Action */}
+      {/* Section 4: Gallery */}
+      <motion.section 
+        id="gallery" 
+        className="py-20 bg-white"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <div className="container max-w-7xl mx-auto px-6">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-gray-800 mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              Our Gallery
+            </motion.h2>
+            <motion.p 
+              className="text-xl text-gray-600 max-w-3xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              viewport={{ once: true }}
+            >
+              Explore our premium properties and developments through stunning visuals
+            </motion.p>
+          </motion.div>
+
+          <div className="gallery-wrapper">
+            <div className="scrolling-container">
+              {[
+                { src: "/images/Abhinav Center 1.jpg", alt: "Abhinav Center" },
+                { src: "/images/Abhinav Center.jpg", alt: "Abhinav Center Exterior" },
+                { src: "/images/Shiva Center 2.jpeg", alt: "Shiva Center" },
+                { src: "/images/Shiva Center.jpeg", alt: "Shiva Center Exterior" },
+              ].concat([
+                { src: "/images/Abhinav Center 1.jpg", alt: "Abhinav Center" },
+                { src: "/images/Abhinav Center.jpg", alt: "Abhinav Center Exterior" },
+                { src: "/images/Shiva Center 2.jpeg", alt: "Shiva Center" },
+                { src: "/images/Shiva Center.jpeg", alt: "Shiva Center Exterior" },
+              ]).map((image, index) => (
+                <motion.div
+                  key={index}
+                  className="group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer shrink-0"
+                  style={{ 
+                    width: 'calc((100% - 3rem) / 3)',
+                    minWidth: '280px',
+                    maxWidth: '400px',
+                    marginRight: '1.5rem'
+                  }}
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  onClick={() => setSelectedImage(image.src)}
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <motion.div
+                        className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <svg className="w-8 h-8 text-[#12394C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                        </svg>
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Lightbox Modal */}
+        <AnimatePresence>
+          {selectedImage && (
+            <motion.div
+              className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedImage(null)}
+            >
+              <motion.div
+                className="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  className="absolute top-4 right-4 z-10 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors backdrop-blur-sm"
+                  onClick={() => setSelectedImage(null)}
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+                <div className="relative w-full h-full max-w-5xl">
+                  <Image
+                    src={selectedImage}
+                    alt="Gallery Image"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 80vw"
+                  />
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.section>
+
+      {/* Section 5: Call to Action */}
       <motion.section 
         className="relative py-20 overflow-hidden"
         initial={{ opacity: 0 }}
@@ -729,12 +935,12 @@ export default function Home() {
         </motion.div>
       </motion.section>
 
-      {/* Section 5: Services */}
+      {/* Section 6: Services */}
       <section id="services">
         <Service/>
       </section>
 
-      {/* Section 6: FAQ */}
+      {/* Section 7: FAQ */}
       <motion.section 
         id="faq" 
         className="py-20 bg-gray-50"
@@ -882,7 +1088,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Section 7: Contact */}
+      {/* Section 8: Contact */}
       <motion.section 
         id="contact" 
         className="relative py-20 overflow-hidden"
@@ -1090,6 +1296,7 @@ export default function Home() {
               <ul className="space-y-2 text-gray-300">
                 <li><a href="#about" className="hover:text-white transition-colors">About Us</a></li>
                 <li><a href="#portfolio" className="hover:text-white transition-colors">Portfolio</a></li>
+                <li><a href="#gallery" className="hover:text-white transition-colors">Gallery</a></li>
                 <li><a href="#services" className="hover:text-white transition-colors">Services</a></li>
                 <li><a href="#faq" className="hover:text-white transition-colors">FAQ</a></li>
                 <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>

@@ -141,6 +141,33 @@ body {
   animation: float 3s ease-in-out infinite;
 }
 
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.scrolling-container {
+  display: flex;
+  width: fit-content;
+  animation: scroll 30s linear infinite;
+  will-change: transform;
+}
+
+.scrolling-container:hover {
+  animation-play-state: paused;
+}
+
+/* Ensure exactly 3 images visible */
+.gallery-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
 /* Improved focus styles */
 *:focus {
   outline: 2px solid rgba(59, 130, 246, 0.5);
