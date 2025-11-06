@@ -92,7 +92,7 @@ export default function Home() {
     },
     {
       question: "What makes KLAS Realty different?",
-      answer: "Established in 2000, KLAS Realty combines decades of experience with a robust portfolio of high-value properties. We focus on transforming land into landmark projects while creating steady, long-term value across every asset class through strategic development and leasing."
+      answer: "Established in 2000, KLAS Realty combines decades of experience with a robust portfolio of high-value properties. We focus on Converting properties into value. while creating steady, long-term value across every asset class through strategic development and leasing."
     },
     {
       question: "Are KLAS Realty properties available for commercial leasing?",
@@ -181,7 +181,7 @@ export default function Home() {
                   ? 'text-gray-700 hover:text-[#12394C]' 
                   : 'text-white/90 hover:text-white'
               }`}>Gallery</Link>
-              <Link href="#services" className={`transition-colors duration-300 ${
+              {/* <Link href="#services" className={`transition-colors duration-300 ${
                 isScrolled 
                   ? 'text-gray-700 hover:text-[#12394C]' 
                   : 'text-white/90 hover:text-white'
@@ -190,7 +190,7 @@ export default function Home() {
                 isScrolled 
                   ? 'text-gray-700 hover:text-[#12394C]' 
                   : 'text-white/90 hover:text-white'
-              }`}>FAQ</Link>
+              }`}>FAQ</Link> */}
               <Link href="#contact" className={`px-6 py-1 rounded-lg font-medium transition-all duration-300 ${
                 isScrolled 
                   ? 'bg-[#12394C] text-white hover:bg-[#12394C]/80' 
@@ -259,7 +259,7 @@ export default function Home() {
               >
                 Gallery
               </Link>
-              <Link 
+              {/* <Link 
                 href="#services" 
                 className={`block px-4 py-2 transition-colors duration-300 ${
                   isScrolled 
@@ -280,7 +280,7 @@ export default function Home() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 FAQ
-              </Link>
+              </Link> */}
               <Link 
                 href="#contact" 
                 className={`block mx-4 px-4 py-2 rounded-lg text-center font-medium transition-all duration-300 ${
@@ -337,7 +337,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
           >
-            Transforming Land into Landmark Projects
+            Converting properties into value.
           </motion.h1>
           <motion.p 
             className="text-xl md:text-2xl mb-8 text-gray-200 leading-relaxed"
@@ -345,7 +345,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.5 }}
           >
-            Established in 2000, KLAS Realty holds a robust portfolio of high-value properties across India, with an expanding national footprint.
+            Established in 2000, KLAS Realty holds a robust portfolio of high-value properties across India.
           </motion.p>
           <motion.div 
             className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -444,44 +444,7 @@ export default function Home() {
               </motion.h2>
 
               {/* Team Avatars */}
-              <motion.div 
-                className="flex items-center mb-4"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                viewport={{ once: true }}
-              >
-                <div className="flex -space-x-3">
-                  {/* First team member */}
-                  <div className="w-14 h-14 rounded-full border-2 border-white ring-2 ring-gray-100 overflow-hidden">
-                    <img 
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" 
-                      alt="Team member 1"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  {/* Second team member */}
-                  <div className="w-14 h-14 rounded-full border-2 border-white ring-2 ring-gray-100 overflow-hidden">
-                    <img 
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" 
-                      alt="Team member 2"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  {/* Third team member */}
-                  <div className="w-14 h-14 rounded-full border-2 border-white ring-2 ring-gray-100 overflow-hidden">
-                    <img 
-                      src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" 
-                      alt="Team member 3"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  {/* Add more circle */}
-                  <Link href="#contact" className="w-14 h-14 rounded-full bg-[#12394C] flex items-center justify-center border-2 border-white ring-2 ring-gray-100 hover:bg-[#12394C]/90 transition-colors cursor-pointer">
-                    <span className="text-white text-xl font-bold">+</span>
-                  </Link>
-                </div>
-              </motion.div>
+           
 
               {/* Team Description */}
             
@@ -501,7 +464,7 @@ export default function Home() {
                   transition={{ duration: 0.6, delay: 0.9 }}
                   viewport={{ once: true }}
                 >
-                  Established in 2000, KLAS Realty holds a robust portfolio of high-value properties across India, with an expanding national footprint.
+                  Established in 2000, KLAS Realty holds a robust portfolio of high-value properties across India.
                 </motion.p>
                 
                 <motion.p
@@ -571,7 +534,7 @@ export default function Home() {
       {/* Section 3: Portfolio */}
       <motion.section 
         id="portfolio" 
-        className="py-20 bg-white"
+        className="py-20 bg-gradient-to-br from-slate-50 to-teal-50"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -606,7 +569,7 @@ export default function Home() {
           </motion.div>
           
           <div className="space-y-12">
-            {/* Portfolio Item 1 - Mumbai & Thane Development */}
+            {/* Portfolio Item 1 - Prime Commercial Offices for Lease */}
             <motion.div 
               className="grid md:grid-cols-2 gap-8 items-center"
               initial={{ opacity: 0, y: 50 }}
@@ -623,33 +586,27 @@ export default function Home() {
                 viewport={{ once: true }}
               >
                 <div>
-                  <span className="inline-block px-3 py-1 bg-[#12394C]/10 text-[#12394C] text-sm font-semibold rounded-full mb-4">
-                    Development
+                  <span className="inline-block px-3 py-1 bg-teal-500/10 text-teal-600 text-sm font-semibold rounded-full mb-4">
+                    Leasing
                   </span>
                   <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-                    Mumbai & Thane
+                    Prime Commercial Offices for Lease
                   </h3>
                   <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                    Premium lands in advanced stages of joint venture development. Residential & Commercial projects totaling 1+ million sq. ft. of planned built-up area.
+                    Premium commercial office spaces in prime locations, offering strategic business advantages and exceptional connectivity.
                   </p>
                 </div>
                 
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-gray-700">
-                    <div className="w-2 h-2 bg-[#12394C] rounded-full"></div>
-                    <span className="font-medium">Residential Projects</span>
+                    <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                    <span className="font-medium">Nariman Point, Mumbai</span>
                   </div>
                   <div className="flex items-center gap-3 text-gray-700">
-                    <div className="w-2 h-2 bg-[#12394C] rounded-full"></div>
-                    <span className="font-medium">Commercial Developments</span>
+                    <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                    <span className="font-medium">Info City, Gandhinagar (Gujarat)</span>
                   </div>
-                  <div className="flex items-center gap-3 text-gray-700">
-                    <svg className="w-5 h-5 text-[#12394C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <span className="text-gray-600">Maharashtra, India</span>
-                  </div>
+                
                 </div>
               </motion.div>
 
@@ -660,15 +617,15 @@ export default function Home() {
                 transition={{ duration: 0.3 }}
               >
                 <Image
-                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80"
-                  alt="Mumbai & Thane Development"
+                  src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80"
+                  alt="Prime Commercial Offices for Lease"
                   fill
                   className="object-cover"
                 />
               </motion.div>
             </motion.div>
 
-            {/* Portfolio Item 2 - Commercial Leasing */}
+            {/* Portfolio Item 2 - Completed Projects */}
             <motion.div 
               className="grid md:grid-cols-2 gap-8 items-center"
               initial={{ opacity: 0, y: 50 }}
@@ -683,8 +640,8 @@ export default function Home() {
                 transition={{ duration: 0.3 }}
               >
                 <Image
-                  src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80"
-                  alt="Commercial Leasing"
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80"
+                  alt="Completed Projects"
                   fill
                   className="object-cover"
                 />
@@ -698,37 +655,93 @@ export default function Home() {
                 viewport={{ once: true }}
               >
                 <div>
-                  <span className="inline-block px-3 py-1 bg-teal-500/10 text-teal-600 text-sm font-semibold rounded-full mb-4">
-                    Leasing
+                  <span className="inline-block px-3 py-1 bg-green-500/10 text-green-600 text-sm font-semibold rounded-full mb-4">
+                    Completed
                   </span>
                   <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-                    Commercial Leasing
+                    Completed Projects
                   </h3>
                   <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                    Prime commercial premises in Mumbai, Chennai, and Gujarat leased to leading corporates. Strategic locations creating steady, long-term value.
+                    Successfully delivered commercial and logistics projects across key metropolitan areas, creating lasting value and impact.
                   </p>
                 </div>
                 
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-gray-700">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
-                    <span className="font-medium">Mumbai Premises</span>
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="font-medium">Commercial Tower, T Nagar, Chennai</span>
                   </div>
                   <div className="flex items-center gap-3 text-gray-700">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
-                    <span className="font-medium">Chennai & Gujarat</span>
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="font-medium">Commercial Tower, Adayar, Chennai</span>
                   </div>
                   <div className="flex items-center gap-3 text-gray-700">
-                    <svg className="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <span className="text-gray-600">Multiple Locations</span>
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="font-medium">Logistics Center, Kolshet Road, Thane (W)</span>
                   </div>
+                 
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Portfolio Item 3 - Upcoming Residential & Commercial Projects */}
+            <motion.div 
+              className="grid md:grid-cols-2 gap-8 items-center"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              {/* Content - Left side */}
+              <motion.div 
+                className="space-y-6 md:order-1"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <div>
+                  <span className="inline-block px-3 py-1 bg-[#12394C]/10 text-[#12394C] text-sm font-semibold rounded-full mb-4">
+                    Upcoming
+                  </span>
+                  <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    Upcoming Residential & Commercial Projects
+                  </h3>
+                  <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                    Exciting new developments in prime locations, combining residential luxury with commercial excellence across Mumbai and Thane.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-gray-700">
+                    <div className="w-2 h-2 bg-[#12394C] rounded-full"></div>
+                    <span className="font-medium">Ghodbunder Road, Thane</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-gray-700">
+                    <div className="w-2 h-2 bg-[#12394C] rounded-full"></div>
+                    <span className="font-medium">Bandra, Mumbai</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-gray-700">
+                    <div className="w-2 h-2 bg-[#12394C] rounded-full"></div>
+                    <span className="font-medium">Chembur, Mumbai</span>
+                  </div>
+                 
                 </div>
               </motion.div>
 
-             
+              {/* Image - Right side */}
+              <motion.div 
+                className="relative h-96 rounded-lg overflow-hidden shadow-lg md:order-2"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Image
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80"
+                  alt="Upcoming Residential & Commercial Projects"
+                  fill
+                  className="object-cover"
+                />
+              </motion.div>
             </motion.div>
           </div>
         </div>
@@ -737,7 +750,7 @@ export default function Home() {
       {/* Section 4: Gallery */}
       <motion.section 
         id="gallery" 
-        className="py-20 bg-white"
+        className="py-20 bg-gradient-to-br from-slate-50 to-teal-50"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -771,54 +784,43 @@ export default function Home() {
             </motion.p>
           </motion.div>
 
-          <div className="gallery-wrapper">
-            <div className="scrolling-container">
-              {[
-                { src: "/images/Abhinav Center 1.jpg", alt: "Abhinav Center" },
-                { src: "/images/Abhinav Center.jpg", alt: "Abhinav Center Exterior" },
-                { src: "/images/Shiva Center 2.jpeg", alt: "Shiva Center" },
-                { src: "/images/Shiva Center.jpeg", alt: "Shiva Center Exterior" },
-              ].concat([
-                { src: "/images/Abhinav Center 1.jpg", alt: "Abhinav Center" },
-                { src: "/images/Abhinav Center.jpg", alt: "Abhinav Center Exterior" },
-                { src: "/images/Shiva Center 2.jpeg", alt: "Shiva Center" },
-                { src: "/images/Shiva Center.jpeg", alt: "Shiva Center Exterior" },
-              ]).map((image, index) => (
-                <motion.div
-                  key={index}
-                  className="group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer shrink-0"
-                  style={{ 
-                    width: 'calc((100% - 3rem) / 3)',
-                    minWidth: '280px',
-                    maxWidth: '400px',
-                    marginRight: '1.5rem'
-                  }}
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  onClick={() => setSelectedImage(image.src)}
-                >
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <motion.div
-                        className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <svg className="w-8 h-8 text-[#12394C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                        </svg>
-                      </motion.div>
-                    </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {[
+              { src: "/images/Abhinav Center 1.jpg", alt: "Abhinav Center" },
+              { src: "/images/ShivaCenter2.jpeg", alt: "Abhinav Center Exterior" },
+            ].map((image, index) => (
+              <motion.div
+                key={index}
+                className="group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5, scale: 1.02 }}
+                onClick={() => setSelectedImage(image.src)}
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <motion.div
+                      className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <svg className="w-8 h-8 text-[#12394C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                      </svg>
+                    </motion.div>
                   </div>
-                </motion.div>
-              ))}
-            </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
 
@@ -862,231 +864,10 @@ export default function Home() {
         </AnimatePresence>
       </motion.section>
 
-      {/* Section 5: Call to Action */}
-      <motion.section 
-        className="relative py-20 overflow-hidden"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true, amount: 0.3 }}
-      >
-        <motion.div 
-          className="absolute inset-0"
-          initial={{ scale: 1.1 }}
-          whileInView={{ scale: 1 }}
-          transition={{ duration: 1.5 }}
-          viewport={{ once: true }}
-        >
-          <Image
-            src="/images/3.jpg"
-            alt="Call to Action Background"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-teal-900/80"></div>
-        </motion.div>
-        <motion.div 
-          className="relative z-10 container mx-auto px-6 text-center text-white"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          viewport={{ once: true }}
-        >
-          <motion.h2 
-            className="text-4xl md:text-5xl font-bold mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            viewport={{ once: true }}
-          >
-            Ready to Transform Your Property Vision?
-          </motion.h2>
-          <motion.p 
-            className="text-xl mb-8 max-w-3xl mx-auto text-teal-100"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            viewport={{ once: true }}
-          >
-            Partner with KLAS Realty to transform land into landmark projects. Experience the pinnacle of real estate development and leasing excellence.
-          </motion.p>
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.9 }}
-            viewport={{ once: true }}
-          >
-            <motion.button 
-              className="bg-white text-teal-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors"
-              whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(255, 255, 255, 0.2)" }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Get a Quote
-            </motion.button>
-            <motion.button 
-              className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-white transition-colors"
-              whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Contact Us
-            </motion.button>
-          </motion.div>
-        </motion.div>
-      </motion.section>
-
-      {/* Section 6: Services */}
-      <section id="services">
-        <Service/>
-      </section>
+    
 
       {/* Section 7: FAQ */}
-      <motion.section 
-        id="faq" 
-        className="py-20 bg-gray-50"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-[1fr_2fr] gap-12 max-w-6xl mx-auto">
-            {/* Left Column */}
-            <motion.div 
-              className="bg-gray-100 p-8 lg:p-12 flex flex-col justify-center"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              {/* OUR SOLUTIONS Label */}
-              <motion.div 
-                className="flex items-center gap-3 mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true }}
-              >
-           
-                <span className="text-sm font-semibold tracking-wider uppercase text-[#12394C]">
-                  OUR SOLUTIONS
-                </span>
-              </motion.div>
-
-              {/* Main Heading */}
-              <motion.h2 
-                className="text-4xl md:text-5xl font-bold text-gray-800 mb-8 leading-tight"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                viewport={{ once: true }}
-              >
-                Find answers to the common questions
-              </motion.h2>
-
-              {/* Phone Contact */}
-              <motion.div 
-                className="flex flex-row items-center gap-3"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                viewport={{ once: true }}
-              >
-                <div className="w-12 h-12 bg-[#12394C] rounded-full flex items-center justify-center shrink-0">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                </div>
-                <a 
-                  href="tel:+18884521505" 
-                  className="text-xl font-semibold text-gray-800 hover:text-[#12394C] transition-colors no-underline"
-                  aria-label="Call us at 1-888-452-1505"
-                >
-                  1-888-452-1505
-                </a>
-              </motion.div>
-            </motion.div>
-
-            {/* Right Column - FAQ Accordion */}
-            <motion.div 
-              className="bg-white rounded-2xl shadow-lg p-6 lg:p-8"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              <div className="space-y-0">
-                {faqs.map((faq, index) => (
-                  <motion.div 
-                    key={index}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                  >
-                    <motion.div 
-                      className="overflow-hidden"
-                    >
-                      <motion.button
-                        className="w-full px-6 py-6 text-left flex items-center justify-between transition-colors bg-white text-gray-800 hover:bg-gray-50"
-                        onClick={() => setOpenFaq(openFaq === index ? -1 : index)}
-                        whileHover={{ backgroundColor: "rgba(249, 250, 251, 0.8)" }}
-                        whileTap={{ scale: 0.99 }}
-                      >
-                        <h3 className="text-xl font-bold pr-4 text-gray-800">
-                          {faq.question}
-                        </h3>
-                        <div className="shrink-0">
-                          <div className="w-8 h-8 rounded-full flex items-center justify-center bg-[#12394C]">
-                            <motion.svg
-                              className="w-4 h-4 text-white"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              animate={{ rotate: openFaq === index ? 45 : 0 }}
-                              transition={{ duration: 0.2 }}
-                            >
-                              {openFaq === index ? (
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 12h12" />
-                              ) : (
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 6v12M6 12h12" />
-                              )}
-                            </motion.svg>
-                          </div>
-                        </div>
-                      </motion.button>
-                      <AnimatePresence>
-                        {openFaq === index && (
-                          <motion.div
-                            className="px-6 pb-6 bg-white"
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
-                          >
-                            <motion.p 
-                              className="text-gray-600 leading-relaxed pt-2"
-                              initial={{ opacity: 0, y: -10 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: -10 }}
-                              transition={{ duration: 0.2, delay: 0.1 }}
-                            >
-                              {faq.answer}
-                            </motion.p>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                    {index < faqs.length - 1 && (
-                      <div className="border-t border-dashed border-gray-300"></div>
-                    )}
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </motion.section>
+  
 
       {/* Section 8: Contact */}
       <motion.section 
@@ -1270,7 +1051,7 @@ export default function Home() {
             <div className="col-span-2">
               <h3 className="text-2xl font-bold mb-4">KLAS Realty </h3>
               <p className="text-gray-300 mb-6 max-w-md">
-                Transforming land into landmark projects. Established in 2000, we hold a robust portfolio of high-value properties across India, creating enduring value through strategic development and leasing.
+                Converting properties into value. Established in 2000, we hold a robust portfolio of high-value properties across India, creating enduring value through strategic development and leasing.
               </p>
               {/* <div className="flex space-x-4">
                 <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#12394C] transition-colors">
@@ -1297,8 +1078,6 @@ export default function Home() {
                 <li><a href="#about" className="hover:text-white transition-colors">About Us</a></li>
                 <li><a href="#portfolio" className="hover:text-white transition-colors">Portfolio</a></li>
                 <li><a href="#gallery" className="hover:text-white transition-colors">Gallery</a></li>
-                <li><a href="#services" className="hover:text-white transition-colors">Services</a></li>
-                <li><a href="#faq" className="hover:text-white transition-colors">FAQ</a></li>
                 <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
               </ul>
             </div>

@@ -13,8 +13,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KLAS Realty – Bizznet | Transforming Land into Landmark Projects",
-  description: "Established in 2000, KLAS Realty holds a robust portfolio of high-value properties across India, with an expanding national footprint.",
+  title: "KLAS Realty – Bizznet | Converting properties into value.",
+  description: "Established in 2000, KLAS Realty holds a robust portfolio of high-value properties across India.",
 };
 
 export default function RootLayout({
