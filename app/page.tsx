@@ -549,7 +549,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <motion.h2 
-              className="text-4xl md:text-5xl font-bold text-gray-800 mb-4"
+              className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 "
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
