@@ -378,7 +378,7 @@ export default function Home() {
       {/* Section 2: About */}
       <motion.section 
         id="about" 
-        className="py-20 bg-gradient-to-br from-slate-50 to-teal-50"
+        className="py-20 bg-teal-50"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -534,13 +534,13 @@ export default function Home() {
       {/* Section 3: Portfolio */}
       <motion.section 
         id="portfolio" 
-        className="py-20 bg-gradient-to-br from-slate-50 to-teal-50"
+        className="py-20 bg-teal-50"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true, amount: 0.2 }}
       >
-        <div className="container max-w-6xl mx-auto px-6">
+        <div className="container max-w-6xl mx-auto px-6 bg-teal-50">
           <motion.div 
             className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
@@ -750,7 +750,7 @@ export default function Home() {
       {/* Section 4: Gallery */}
       <motion.section 
         id="gallery" 
-        className="py-20 bg-gradient-to-br from-slate-50 to-teal-50"
+        className="py-20 bg-teal-50"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -867,7 +867,152 @@ export default function Home() {
     
 
       {/* Section 7: FAQ */}
-  
+      <motion.section 
+        id="faq" 
+        className="py-20 bg-gray-50"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-[1fr_2fr] gap-12 max-w-6xl mx-auto">
+            {/* Left Column */}
+            <motion.div 
+              className="bg-gray-100 p-8 lg:p-12 flex flex-col justify-center"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              {/* OUR SOLUTIONS Label */}
+              <motion.div 
+                className="flex items-center gap-3 mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                viewport={{ once: true }}
+              >
+           
+                <span className="text-sm font-semibold tracking-wider uppercase text-[#12394C]">
+                  OUR SOLUTIONS
+                </span>
+              </motion.div>
+
+              {/* Main Heading */}
+              <motion.h2 
+                className="text-4xl md:text-5xl font-bold text-gray-800 mb-8 leading-tight"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                Find answers to the common questions
+              </motion.h2>
+
+              {/* Phone Contact */}
+              <motion.div 
+                className="flex flex-row items-center gap-3"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-12 h-12 bg-[#12394C] rounded-full flex items-center justify-center shrink-0">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                </div>
+                <a 
+                  href="tel:+18884521505" 
+                  className="text-xl font-semibold text-gray-800 hover:text-[#12394C] transition-colors no-underline"
+                  aria-label="Call us at 1-888-452-1505"
+                >
+                  1-888-452-1505
+                </a>
+              </motion.div>
+            </motion.div>
+
+            {/* Right Column - FAQ Accordion */}
+            <motion.div 
+              className="bg-white rounded-2xl shadow-lg p-6 lg:p-8"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <div className="space-y-0">
+                {faqs.map((faq, index) => (
+                  <motion.div 
+                    key={index}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                  >
+                    <motion.div 
+                      className="overflow-hidden"
+                    >
+                      <motion.button
+                        className="w-full px-6 py-6 text-left flex items-center justify-between transition-colors bg-white text-gray-800 hover:bg-gray-50"
+                        onClick={() => setOpenFaq(openFaq === index ? -1 : index)}
+                        whileHover={{ backgroundColor: "rgba(249, 250, 251, 0.8)" }}
+                        whileTap={{ scale: 0.99 }}
+                      >
+                        <h3 className="text-xl font-bold pr-4 text-gray-800">
+                          {faq.question}
+                        </h3>
+                        <div className="shrink-0">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center bg-[#12394C]">
+                            <motion.svg
+                              className="w-4 h-4 text-white"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              animate={{ rotate: openFaq === index ? 45 : 0 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              {openFaq === index ? (
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 12h12" />
+                              ) : (
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 6v12M6 12h12" />
+                              )}
+                            </motion.svg>
+                          </div>
+                        </div>
+                      </motion.button>
+                      <AnimatePresence>
+                        {openFaq === index && (
+                          <motion.div
+                            className="px-6 pb-6 bg-white"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                          >
+                            <motion.p 
+                              className="text-gray-600 leading-relaxed pt-2"
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              transition={{ duration: 0.2, delay: 0.1 }}
+                            >
+                              {faq.answer}
+                            </motion.p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                    {index < faqs.length - 1 && (
+                      <div className="border-t border-dashed border-gray-300"></div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </motion.section>
 
       {/* Section 8: Contact */}
       <motion.section 
@@ -1084,25 +1229,52 @@ export default function Home() {
 
             <div>
               <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
-              <div className="space-y-3 text-gray-300">
-                <div className="flex items-center">
-                  <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  <span>+91 (XXX) XXX-XXXX</span>
+              <div className="space-y-4 text-gray-300">
+                <div>
+                  <div className="flex items-start mb-2">
+                    <svg className="w-5 h-5 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <div>
+                      <p className="font-medium text-white mb-1">KLAS Group</p>
+                      <p>603, Dalamal Towers</p>
+                      <p>Nariman Point</p>
+                      <p>Mumbai 400021</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center ml-8">
+                    <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    <span>+91 98670 07181</span>
+                  </div>
                 </div>
-                <div className="flex items-center">
+                <div>
+                  <div className="flex items-start mb-2">
+                    <svg className="w-5 h-5 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <div>
+                      <p className="font-medium text-white mb-1">KLAS Group - Bizznet Unit</p>
+                      <p>Mohan Mill Compound</p>
+                      <p>Kolshet Majiwada</p>
+                      <p>Thane (W)</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center ml-8">
+                    <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    <span>+91 98678 24227</span>
+                  </div>
+                </div>
+                <div className="flex items-center pt-2">
                   <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                   <span>info@klasrealty.com</span>
-                </div>
-                <div className="flex items-start">
-                  <svg className="w-5 h-5 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  <span>Mumbai, India</span>
                 </div>
               </div>
             </div>
