@@ -635,16 +635,39 @@ export default function Home() {
             >
                {/* Image - Left side */}
                <motion.div 
-                className="relative h-96 rounded-lg overflow-hidden shadow-lg md:order-1"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
+                className="space-y-6 md:order-1"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                viewport={{ once: true }}
               >
-                <Image
-                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80"
-                  alt="Completed Projects"
-                  fill
-                  className="object-cover"
-                />
+                <div>
+                  <span className="inline-block px-3 py-1 bg-[#12394C]/10 text-[#12394C] text-sm font-semibold rounded-full mb-4">
+                    Upcoming
+                  </span>
+                  <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    Upcoming Residential & Commercial Projects
+                  </h3>
+                  <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                    Exciting new developments in prime locations, combining residential luxury with commercial excellence across Mumbai and Thane.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-gray-700">
+                    <div className="w-2 h-2 bg-[#12394C] rounded-full"></div>
+                    <span className="font-medium">Ghodbunder Road, Thane</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-gray-700">
+                    <div className="w-2 h-2 bg-[#12394C] rounded-full"></div>
+                    <span className="font-medium">Bandra, Mumbai</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-gray-700">
+                    <div className="w-2 h-2 bg-[#12394C] rounded-full"></div>
+                    <span className="font-medium">Chembur, Mumbai</span>
+                  </div>
+                 
+                </div>
               </motion.div>
               {/* Content - Right side */}
               <motion.div 
@@ -684,65 +707,7 @@ export default function Home() {
               </motion.div>
             </motion.div>
 
-            {/* Portfolio Item 3 - Upcoming Residential & Commercial Projects */}
-            <motion.div 
-              className="grid md:grid-cols-2 gap-8 items-center"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              {/* Content - Left side */}
-              <motion.div 
-                className="space-y-6 md:order-1"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                viewport={{ once: true }}
-              >
-                <div>
-                  <span className="inline-block px-3 py-1 bg-[#12394C]/10 text-[#12394C] text-sm font-semibold rounded-full mb-4">
-                    Upcoming
-                  </span>
-                  <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-                    Upcoming Residential & Commercial Projects
-                  </h3>
-                  <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                    Exciting new developments in prime locations, combining residential luxury with commercial excellence across Mumbai and Thane.
-                  </p>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-gray-700">
-                    <div className="w-2 h-2 bg-[#12394C] rounded-full"></div>
-                    <span className="font-medium">Ghodbunder Road, Thane</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-gray-700">
-                    <div className="w-2 h-2 bg-[#12394C] rounded-full"></div>
-                    <span className="font-medium">Bandra, Mumbai</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-gray-700">
-                    <div className="w-2 h-2 bg-[#12394C] rounded-full"></div>
-                    <span className="font-medium">Chembur, Mumbai</span>
-                  </div>
-                 
-                </div>
-              </motion.div>
-
-              {/* Image - Right side */}
-              <motion.div 
-                className="relative h-96 rounded-lg overflow-hidden shadow-lg md:order-2"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Image
-                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80"
-                  alt="Upcoming Residential & Commercial Projects"
-                  fill
-                  className="object-cover"
-                />
-              </motion.div>
-            </motion.div>
+           
           </div>
         </div>
       </motion.section>
